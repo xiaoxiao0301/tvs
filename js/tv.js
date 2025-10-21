@@ -134,7 +134,20 @@
         }
         collectFocusables();
         if (focusables.length) {
-            focusAt(0);
+            // Focus on play button instead of search input
+            const playButton = document.getElementById('playPauseBtn');
+            if (playButton && focusables.includes(playButton)) {
+                const index = focusables.indexOf(playButton);
+                focusAt(index);
+            } else {
+                // Fallback to first non-input element
+                const nonInputIndex = focusables.findIndex(el => el.tagName !== 'INPUT');
+                if (nonInputIndex !== -1) {
+                    focusAt(nonInputIndex);
+                } else {
+                    focusAt(0);
+                }
+            }
         }
         window.addEventListener('keydown', handleKeyDown, { passive: false });
         const list = document.getElementById('playlistItems');
