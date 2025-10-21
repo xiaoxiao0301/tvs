@@ -13,6 +13,7 @@
         '.transport-button--next',
         '#mobileQueueToggle',
         '.playlist-item',
+        '.search-result-item',
         '#qualityToggle',
         '#exportPlaylistBtn',
         '#importPlaylistBtn',
@@ -138,6 +139,8 @@
         window.addEventListener('keydown', handleKeyDown, { passive: false });
         const list = document.getElementById('playlistItems');
         const results = document.getElementById('searchResults');
+        const container = document.getElementById('mainContainer');
+        
         const observer = new MutationObserver(() => {
             const prev = focusables[focusedIndex];
             collectFocusables();
@@ -146,8 +149,32 @@
                 focusAt(focusedIndex);
             }
         });
+        
         if (list) observer.observe(list, { childList: true, subtree: true });
         if (results) observer.observe(results, { childList: true, subtree: true });
+        
+        // Watch for search mode changes
+        if (container) {
+            const searchObserver = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        const isSearchMode = container.classList.contains('search-mode');
+                        if (isSearchMode) {
+                            // When entering search mode, focus on first search result if available
+                            setTimeout(() => {
+                                collectFocusables();
+                                const searchResults = focusables.filter(el => el.classList.contains('search-result-item'));
+                                if (searchResults.length > 0) {
+                                    const index = focusables.indexOf(searchResults[0]);
+                                    focusAt(index);
+                                }
+                            }, 100);
+                        }
+                    }
+                });
+            });
+            searchObserver.observe(container, { attributes: true, attributeFilter: ['class'] });
+        }
     }
 
     if (document.readyState === 'loading') {

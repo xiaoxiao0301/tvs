@@ -56,6 +56,66 @@ html.tv-view .search-input { font-size: 22px; padding: 14px 18px; }
 html.tv-view .source-select-btn { font-size: 20px; padding: 14px 18px; }
 html.tv-view .search-btn { font-size: 20px; padding: 14px 22px; }
 
+/* Search mode layout for TV */
+html.tv-view .container.search-mode {
+    grid-template-areas: 
+        "header header header"
+        "search search search"
+        "search search search"
+        "controls controls controls";
+    grid-template-rows: 120px 1fr 1fr 120px;
+}
+
+html.tv-view .container.search-mode .search-area {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    border: 2px solid rgba(26, 188, 156, 0.4);
+}
+
+html.tv-view .container.search-mode .search-results {
+    max-height: none;
+    height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    opacity: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+html.tv-view .container.search-mode .main-content {
+    display: none;
+}
+
+html.tv-view .search-result-item {
+    font-size: 18px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+html.tv-view .search-result-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+html.tv-view .search-result-artist {
+    font-size: 16px;
+    color: rgba(238, 242, 246, 0.7);
+}
+
+html.tv-view .action-btn {
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 10px;
+}
+
 /* Cover and info */
 html.tv-view .album-cover { width: 340px; min-height: 340px; border-radius: 18px; }
 html.tv-view .current-song-title { font-size: 24px; }
